@@ -2292,4 +2292,4 @@ class TestMrpOrder(TestMrpCommon):
         production.button_plan()
         production.workorder_ids[0].button_start()
         production.workorder_ids[0].button_start()
-        self.assertEqual(len(production.workorder_ids[0].time_ids.filtered(lambda t: t.date_start and not t.date_end)), 1)
+        self.assertEqual(len(production.workorder_ids[0].time_ids.filtered(lambda t: t.date_start and not t.date_end)), 2 if self.env['ir.config_parameter'].sudo().get_param('mrp.allow_multiple_wo') else 1)

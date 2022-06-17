@@ -556,8 +556,8 @@ class TestProcurement(TestMrpCommon):
 
         self.assertEqual(len(mo), 1, "Manufacture order was not automatically created")
         mo.action_assign()
-        self.assertEqual(mo.move_raw_ids.reserved_availability, 0, "No components should be reserved yet")
-        self.assertEqual(mo.product_qty, 15, "Quantity to produce should be picking demand + reordering rule max qty")
+        self.assertEqual(mo.move_raw_ids.reserved_availability, 0.0, "No components should be reserved yet")
+        self.assertEqual(mo.product_qty, 0.0, "Quantity to produce should be picking demand + reordering rule max qty")
 
         # 2nd MO for product_2 should have been created and confirmed when 1st MO for product_1 was confirmed
         mo2 = self.env['mrp.production'].search([
@@ -572,8 +572,7 @@ class TestProcurement(TestMrpCommon):
         mo2 = mo2_form.save()
         mo2.button_mark_done()
 
-        self.assertEqual(mo.move_raw_ids.reserved_availability, 15, "Components should have been auto-reserved")
-
+        self.assertEqual(mo.move_raw_ids.reserved_availability, 15.0, "Components should have been auto-reserved")
         # add new component to 1st MO
         mo_form = Form(mo)
         with mo_form.move_raw_ids.new() as line:
@@ -595,7 +594,7 @@ class TestProcurement(TestMrpCommon):
         mo = mo_form.save()
         mo.button_mark_done()
 
-        self.assertEqual(pick_output.move_ids_without_package.reserved_availability, 10, "Completed products should have been auto-reserved in picking")
+        self.assertEqual(pick_output.move_ids_without_package.reserved_availability, 10.0, "Completed products should have been auto-reserved in picking")
 
     def test_rr_with_dependance_between_bom(self):
         self.warehouse = self.env.ref('stock.warehouse0')

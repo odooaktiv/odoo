@@ -78,6 +78,17 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-lg-6 col-12 o_setting_box" id="allow_multiple_wo" title="Add group work orders">
+                                <div class="o_setting_left_pane">
+                                    <field name="allow_multiple_wo"/>
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="allow_multiple_wo"/>
+                                    <div class="text-muted">
+                                       Enable the button for Multi User access from multiple users.
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <h2>Planning</h2>
                         <div class="row mt16 o_settings_container">

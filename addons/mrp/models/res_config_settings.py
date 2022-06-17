@@ -19,6 +19,10 @@ class ResConfigSettings(models.TransientModel):
     group_mrp_routings = fields.Boolean("MRP Work Orders",
         implied_group='mrp.group_mrp_routings')
     group_locked_by_default = fields.Boolean("Lock Quantities To Consume", implied_group='mrp.group_locked_by_default')
+    allow_multiple_wo = fields.Boolean(
+        string="Enable Multi User Work Orders",
+        config_parameter='mrp.allow_multiple_wo',
+        help="Enable the button apply access from multiple users.")
 
     @api.onchange('use_manufacturing_lead')
     def _onchange_use_manufacturing_lead(self):

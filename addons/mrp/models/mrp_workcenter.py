@@ -365,10 +365,10 @@ class MrpWorkcenterProductivity(models.Model):
 
     @api.constrains('workorder_id')
     def _check_open_time_ids(self):
+        allow_multiple = self.env['ir.config_parameter'].sudo().get_param('mrp.allow_multiple_wo')
         for workorder in self.workorder_id:
-            open_time_ids_by_user = self.env["mrp.workcenter.productivity"].read_group([("id", "in", workorder.time_ids.ids), ("date_end", "=", False)], ["user_id", "open_time_ids_count:count(id)"], ["user_id"])
-            if any(data["open_time_ids_count"] > 1 for data in open_time_ids_by_user):
-                raise ValidationError(_('The Workorder (%s) cannot be started twice!', workorder.display_name))
+            if not allow_multiple and len(workorder.time_ids.filtered(lambda t: t.date_start and not t.date_end)) > 1:
+                raise ValidationError(_('The Workoder (%s) cannot be started twice!', workorder.display_name))
 
     def button_block(self):
         self.ensure_one()

@@ -525,8 +525,7 @@ class MrpWorkorder(models.Model):
         return rows
 
     def button_start(self):
-        self.ensure_one()
-        if any(not time.date_end for time in self.time_ids.filtered(lambda t: t.user_id.id == self.env.user.id)):
+        if any(time.date_start and not time.date_end for time in self.time_ids) and not self.env['ir.config_parameter'].sudo().get_param('mrp.allow_multiple_wo'):
             return True
         # As button_start is automatically called in the new view
         if self.state in ('done', 'cancel'):
